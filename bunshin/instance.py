@@ -19,7 +19,7 @@ class InstanceType(object):
     @property
     def states(self):
         """ Return the status of each instances from this type. """
-        return [] if not self.instances else [i.update() for i in self.instances]
+        return [] if not self.instances else self.update()
 
     def launch(self, count=1):
         """ Launch new instance based on AMI with id `ami_id`. """
@@ -38,3 +38,7 @@ class InstanceType(object):
         if self.instances:
             for instance in self.instances:
                 instance.terminate()
+
+    def update(self):
+        """ Fetch latest instance attributes. """
+        return [instance.update() for instance in self.instances]
